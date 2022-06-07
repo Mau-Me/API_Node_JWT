@@ -1,0 +1,24 @@
+{
+  "name": "blog-do-codigo-jwt",
+  "version": "1.0.0",
+  "description": "> Um blog simples em Node.js",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
+    "sqlite3": "^5.0.8"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
