@@ -31,6 +31,11 @@ module.exports = {
         if (error && error.name === "JsonWebTokenError") {
           return res.status(401).json({ erro: error.message });
         }
+        if (error && error.name === "TokenExpiredError") {
+          return res
+            .status(401)
+            .json({ erro: error.message, expiradoEm: error.expiredAt });
+        }
         if (error) {
           return res.status(500).json({ erro: error.message });
         }
@@ -38,6 +43,7 @@ module.exports = {
           return res.status(401).end();
         }
 
+        req.token = infoAdicionais.token;
         req.user = usuario;
         return next();
       }
