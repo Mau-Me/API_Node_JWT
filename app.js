@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const { estrategiasAutenticacao } = require("./src/usuarios");
 
 app.use(
+  express.json(),
   bodyParser.urlencoded({
     extended: true,
   })
