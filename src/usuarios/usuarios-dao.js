@@ -2,17 +2,23 @@ const db = require("../../database");
 const { InternalServerError } = require("../erros");
 
 module.exports = {
-  adiciona: (usuario) => {
+  adiciona(usuario) {
     return new Promise((resolve, reject) => {
       db.run(
         `
           INSERT INTO usuarios (
             nome,
             email,
-            senhaHash
-          ) VALUES (?, ?, ?)
+            senhaHash,
+            emailVerificado
+          ) VALUES (?, ?, ?, ?)
         `,
-        [usuario.nome, usuario.email, usuario.senhaHash],
+        [
+          usuario.nome,
+          usuario.email,
+          usuario.senhaHash,
+          usuario.emailVerificado,
+        ],
         (erro) => {
           if (erro) {
             reject(new InternalServerError("Erro ao adicionar o usuário!"));
@@ -24,7 +30,7 @@ module.exports = {
     });
   },
 
-  buscaPorId: (id) => {
+  buscaPorId(id) {
     return new Promise((resolve, reject) => {
       db.get(
         `
@@ -44,7 +50,7 @@ module.exports = {
     });
   },
 
-  buscaPorEmail: (email) => {
+  buscaPorEmail(email) {
     return new Promise((resolve, reject) => {
       db.get(
         `
@@ -64,7 +70,7 @@ module.exports = {
     });
   },
 
-  lista: () => {
+  lista() {
     return new Promise((resolve, reject) => {
       db.all(
         `
@@ -80,7 +86,7 @@ module.exports = {
     });
   },
 
-  deleta: (usuario) => {
+  deleta(usuario) {
     return new Promise((resolve, reject) => {
       db.run(
         `
@@ -91,6 +97,21 @@ module.exports = {
         (erro) => {
           if (erro) {
             return reject("Erro ao deletar o usuário");
+          }
+          return resolve();
+        }
+      );
+    });
+  },
+
+  modificaEmailVerificado(usuario, emailVerificado) {
+    return new Promise((resolve, reject) => {
+      db.run(
+        "UPDATE usuarios SET emailVerificado = ? WHERE id = ?",
+        [emailVerificado, usuario.id],
+        (erro) => {
+          if (erro) {
+            return reject("Erro ao atualizar o campo de verificação de e-mail");
           }
           return resolve();
         }

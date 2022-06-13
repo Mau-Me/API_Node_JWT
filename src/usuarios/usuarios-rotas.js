@@ -15,6 +15,12 @@ module.exports = (app) => {
     .route("/usuario/atualiza-token")
     .post(middlewaresAutenticacao.refresh, usuariosControlador.login);
   app
+    .route("/usuario/verifica-email/:token")
+    .get(
+      middlewaresAutenticacao.verificacaoEmail,
+      usuariosControlador.verificaEmail
+    );
+  app
     .route("/usuario")
     .post(usuariosControlador.adiciona)
     .get(usuariosControlador.lista);
